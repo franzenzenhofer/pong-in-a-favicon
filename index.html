@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Pong in a Favicon</title>
+    <meta
+      name="description"
+      content="A full game of Pong played inside the browser tab's favicon. Scroll up and down to move your paddle."
+    />
+    <meta name="theme-color" content="#0a0e14" />
+    <meta property="og:title" content="Pong in a Favicon" />
+    <meta property="og:description" content="A real game of Pong, running in the tab's favicon. Scroll to play." />
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M8AAAMCAQGZF99eAAAAAElFTkSuQmCC" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Pong<span class="dot">.</span> in a Favicon</h1>
+        <p class="lede">
+          A full game of Pong is playing in this tab's icon. <strong>Scroll up and down to move your paddle.</strong>
+          The score is in the tab title.
+        </p>
+        <p class="point">look up at your browser tab &uarr;</p>
+
+        <!-- Mobile only: phones hide tab icons, so we mirror the favicon here. -->
+        <div class="tab-preview" aria-label="Live favicon preview">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <img id="tab-favicon" width="16" height="16" alt="live favicon" />
+          <span class="tab-title">Pong in a Favicon</span>
+        </div>
+      </header>
+
+      <section>
+        <h2>Self-tests <span class="muted">(run live, in your browser)</span></h2>
+        <div id="selftest"></div>
+      </section>
+
+      <section>
+        <h2>Core code</h2>
+        <div id="code" class="code"></div>
+      </section>
+
+      <footer>
+        <a href="https://github.com/franzenzenhofer/pong-in-a-favicon">GitHub</a>
+        &middot; MIT &middot; clean, DRY, modern JavaScript
+      </footer>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

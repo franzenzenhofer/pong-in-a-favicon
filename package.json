@@ -1,0 +1,36 @@
+{
+  "name": "pong-in-a-favicon",
+  "version": "1.0.0",
+  "description": "A complete game of Pong played inside the browser tab's favicon. Scroll to move your paddle. Single source of truth, DRY, and playable from the command line.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Franz Enzenhofer",
+  "homepage": "https://pong-in-a-favicon.franzai.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/franzenzenhofer/pong-in-a-favicon.git"
+  },
+  "keywords": ["pong", "favicon", "game", "canvas", "cli", "dry", "ssot"],
+  "bin": {
+    "pong": "bin/pong.js"
+  },
+  "files": ["src", "bin"],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "pong": "node bin/pong.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "vitest": "^2.1.8"
+  }
+}
