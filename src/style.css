@@ -77,13 +77,19 @@ h1 .dot { color: var(--fg); }
 .tab-preview .tab-title { color: var(--text); font-size: 0.85rem; white-space: nowrap; }
 
 @media (hover: none) and (pointer: coarse) {
-  /* Sticky so it stays in view while you scroll the page to play. */
+  /* Fixed from the start: the bar is pinned to the top and never moves while
+     you scroll the page to play. */
   .tab-preview {
     display: flex;
-    position: sticky;
-    top: 0.5rem;
-    z-index: 10;
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    z-index: 100;
   }
+  /* Push the page down so nothing hides behind the fixed bar. */
+  main { padding-top: 4.5rem; }
   .point { display: none; } /* phones hide tab icons; point at the preview instead */
 }
 
