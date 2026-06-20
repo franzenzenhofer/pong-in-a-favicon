@@ -77,15 +77,20 @@ h1 .dot { color: var(--fg); }
 .tab-preview .tab-title { color: var(--text); font-size: 0.85rem; white-space: nowrap; }
 
 @media (hover: none) and (pointer: coarse) {
-  /* Fixed from the start: the bar is pinned to the top and never moves while
-     you scroll the page to play. */
+  /* Fixed from the start: a full-width, left-aligned bar pinned to the top that
+     never moves while you scroll the page to play. */
   .tab-preview {
     display: flex;
+    justify-content: flex-start;
     position: fixed;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    max-width: none;
+    transform: none;
     margin: 0;
+    border-radius: 0 0 10px 10px;
     z-index: 100;
   }
   /* Push the page down so nothing hides behind the fixed bar. */
