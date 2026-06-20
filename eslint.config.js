@@ -25,6 +25,7 @@ export default [
         document: 'readonly',
         performance: 'readonly',
         requestAnimationFrame: 'readonly',
+        setInterval: 'readonly',
         HTMLElement: 'readonly',
         HTMLLinkElement: 'readonly',
         HTMLCanvasElement: 'readonly',

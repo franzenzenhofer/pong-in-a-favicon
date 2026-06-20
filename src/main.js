@@ -42,26 +42,32 @@ function boot() {
     document.getElementById('tab-favicon')
   );
 
+  // setInterval (not requestAnimationFrame) so the game keeps playing even when
+  // the tab is in the background - rAF is paused in hidden tabs, which would
+  // freeze the favicon. Physics steps by real elapsed time, so speed is stable
+  // whether we run at 60/s (visible) or ~1/s (Chrome throttles hidden tabs).
   let lastFavicon = 0;
-  const interval = 1000 / cfg.FAVICON_FPS;
+  const faviconInterval = 1000 / cfg.FAVICON_FPS;
   let prev = performance.now();
 
-  function frame(now) {
-    const dt = Math.min((now - prev) / (1000 / 60), 3); // cap big gaps
+  function frame() {
+    const now = performance.now();
+    const dt = Math.min((now - prev) / (1000 / 60), 3); // cap big background gaps
     prev = now;
 
     step(game, input.consume(), dt);
 
-    if (now - lastFavicon >= interval) {
+    if (now - lastFavicon >= faviconInterval) {
       draw(ctx, game);
       const url = setFavicon(canvas);
       document.title = `${game.score.player}:${game.score.ai} - Pong in a Favicon`;
       if (preview) preview.src = url;
       lastFavicon = now;
     }
-    requestAnimationFrame(frame);
   }
-  requestAnimationFrame(frame);
+
+  frame();
+  setInterval(frame, 1000 / 60);
 }
 
 if (document.readyState === 'loading') {
