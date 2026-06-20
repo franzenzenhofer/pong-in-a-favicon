@@ -15,6 +15,14 @@
   </head>
   <body>
     <main>
+      <!-- Mobile only: phones hide tab icons, so we mirror the favicon here.
+           Sticky (see CSS) so it stays on screen while you scroll to play. -->
+      <div class="tab-preview" aria-label="Live favicon preview">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <img id="tab-favicon" width="16" height="16" alt="live favicon" />
+        <span class="tab-title">Pong in a Favicon</span>
+      </div>
+
       <header>
         <h1>Pong<span class="dot">.</span> in a Favicon</h1>
         <p class="lede">
@@ -22,13 +30,6 @@
           The score is in the tab title.
         </p>
         <p class="point">look up at your browser tab &uarr;</p>
-
-        <!-- Mobile only: phones hide tab icons, so we mirror the favicon here. -->
-        <div class="tab-preview" aria-label="Live favicon preview">
-          <span class="dots"><i></i><i></i><i></i></span>
-          <img id="tab-favicon" width="16" height="16" alt="live favicon" />
-          <span class="tab-title">Pong in a Favicon</span>
-        </div>
       </header>
 
       <section>

@@ -69,6 +69,28 @@ export const CHECKS = Object.freeze([
     },
   },
   {
+    name: 'the ball speeds up when YOU win a point',
+    run() {
+      const s = createState();
+      const before = s.rallySpeed;
+      s.ball = { x: FIELD.w + 1, y: 16, vx: 1, vy: 0, speed: before };
+      step(s, 0, 1);
+      assert(s.score.player === 1, 'player should have scored');
+      assert(s.rallySpeed > before, 'rally did not speed up');
+    },
+  },
+  {
+    name: 'the ball slows down when the CPU wins a point',
+    run() {
+      const s = createState();
+      const before = s.rallySpeed;
+      s.ball = { x: -cfg.BALL_SIZE - 1, y: 16, vx: -1, vy: 0, speed: before };
+      step(s, 0, 1);
+      assert(s.score.ai === 1, 'CPU should have scored');
+      assert(s.rallySpeed < before, 'rally did not slow down');
+    },
+  },
+  {
     name: 'the player paddle returns the ball',
     run() {
       const s = createState();

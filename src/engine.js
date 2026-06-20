@@ -17,6 +17,7 @@ const centerPaddleY = () => (FIELD.h - cfg.PADDLE_H) / 2;
 
 /**
  * @typedef {Object} GameState
+ * @property {number} rallySpeed Current serve speed; rises when you score, falls when the CPU scores.
  * @property {{x:number,y:number,vx:number,vy:number,speed:number}} ball
  * @property {number} playerY Top edge of the player's (left) paddle.
  * @property {number} aiY     Top edge of the computer's (right) paddle.
@@ -24,24 +25,27 @@ const centerPaddleY = () => (FIELD.h - cfg.PADDLE_H) / 2;
  */
 
 /**
- * Serve the ball from the centre toward `dir` (-1 = to player, +1 = to AI).
+ * Serve the ball from the centre toward `dir` (-1 = to player, +1 = to AI) at
+ * the current rally speed.
  * @param {-1|1} dir
+ * @param {number} speed
  */
-function serve(dir) {
+function serve(dir, speed) {
   const angle = (Math.random() * 0.6 - 0.3) * Math.PI; // shallow-ish
   return {
     x: FIELD.w / 2,
     y: FIELD.h / 2,
-    vx: dir * cfg.BALL_SPEED * Math.cos(angle),
-    vy: cfg.BALL_SPEED * Math.sin(angle),
-    speed: cfg.BALL_SPEED,
+    vx: dir * speed * Math.cos(angle),
+    vy: speed * Math.sin(angle),
+    speed,
   };
 }
 
 /** Build a fresh game. @returns {GameState} */
 export function createState() {
   return {
-    ball: serve(Math.random() < 0.5 ? -1 : 1),
+    rallySpeed: cfg.BALL_SPEED,
+    ball: serve(Math.random() < 0.5 ? -1 : 1, cfg.BALL_SPEED),
     playerY: centerPaddleY(),
     aiY: centerPaddleY(),
     score: { player: 0, ai: 0 },
@@ -63,8 +67,9 @@ function bounceOff(ball, paddleX, paddleY, towardRight) {
   const paddleCenter = paddleY + cfg.PADDLE_H / 2;
   const ballCenter = ball.y + cfg.BALL_SIZE / 2;
   const offset = (ballCenter - paddleCenter) / (cfg.PADDLE_H / 2); // -1..1
-  ball.speed = Math.min(ball.speed * cfg.BALL_SPEEDUP, cfg.BALL_MAX_SPEED);
 
+  // Speed is set by the score (see step), not by rallies - so it only changes
+  // when someone wins a point. Reflect at the current speed.
   const dirX = towardRight ? 1 : -1;
   ball.vy += offset * cfg.SPIN;
   // Re-normalise to keep total speed controlled, then re-apply X direction.
@@ -116,13 +121,17 @@ export function step(state, playerMove = 0, dt = 1) {
     bounceOff(ball, AI_X, state.aiY, false);
   }
 
-  // Scoring - ball leaves the field through a side wall.
+  // Scoring - ball leaves the field through a side wall. The rally speed rises
+  // when YOU win a point and falls when the CPU does, so the game gets faster
+  // only while you are winning and calms back down when you are not.
   if (ball.x + cfg.BALL_SIZE < 0) {
     state.score.ai += 1;
-    state.ball = serve(1);
+    state.rallySpeed = Math.max(state.rallySpeed * cfg.SPEED_DOWN, cfg.SPEED_MIN);
+    state.ball = serve(1, state.rallySpeed);
   } else if (ball.x > FIELD.w) {
     state.score.player += 1;
-    state.ball = serve(-1);
+    state.rallySpeed = Math.min(state.rallySpeed * cfg.SPEED_UP, cfg.SPEED_MAX);
+    state.ball = serve(-1, state.rallySpeed);
   }
 
   return state;

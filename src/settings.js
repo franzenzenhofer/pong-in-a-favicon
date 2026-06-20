@@ -19,9 +19,11 @@ export const FIELD = Object.freeze({ w: 32, h: 32 });
 /** @type {ReadonlyArray<Setting>} */
 export const SETTINGS = Object.freeze([
   { key: 'BALL_SIZE', value: 3, unit: 'px', doc: 'Side length of the square ball.' },
-  { key: 'BALL_SPEED', value: 0.65, unit: 'px/frame', doc: 'Starting ball speed; nudged up on every paddle hit.' },
-  { key: 'BALL_SPEEDUP', value: 1.04, unit: 'x', doc: 'Speed multiplier applied each time a paddle returns the ball.' },
-  { key: 'BALL_MAX_SPEED', value: 1.8, unit: 'px/frame', doc: 'Hard cap so the rally stays winnable.' },
+  { key: 'BALL_SPEED', value: 0.35, unit: 'px/frame', doc: 'Calm base ball speed for a fresh game.' },
+  { key: 'SPEED_UP', value: 1.15, unit: 'x', doc: 'Ball speeds up by this factor for every point YOU win.' },
+  { key: 'SPEED_DOWN', value: 0.87, unit: 'x', doc: 'Ball slows by this factor for every point the CPU wins.' },
+  { key: 'SPEED_MIN', value: 0.22, unit: 'px/frame', doc: 'Slowest the ball is ever allowed to get.' },
+  { key: 'SPEED_MAX', value: 1.5, unit: 'px/frame', doc: 'Fastest the ball is ever allowed to get.' },
   { key: 'PADDLE_W', value: 3, unit: 'px', doc: 'Paddle thickness.' },
   { key: 'PADDLE_H', value: 11, unit: 'px', doc: 'Paddle length.' },
   { key: 'PADDLE_MARGIN', value: 0, unit: 'px', doc: 'Gap between each paddle and its wall (0 = flush to the edge).' },

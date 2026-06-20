@@ -77,7 +77,13 @@ h1 .dot { color: var(--fg); }
 .tab-preview .tab-title { color: var(--text); font-size: 0.85rem; white-space: nowrap; }
 
 @media (hover: none) and (pointer: coarse) {
-  .tab-preview { display: flex; }
+  /* Sticky so it stays in view while you scroll the page to play. */
+  .tab-preview {
+    display: flex;
+    position: sticky;
+    top: 0.5rem;
+    z-index: 10;
+  }
   .point { display: none; } /* phones hide tab icons; point at the preview instead */
 }
 
